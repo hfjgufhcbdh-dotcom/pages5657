@@ -34,3 +34,59 @@ function formatNumber(value, decimals) {
     maximumFractionDigits: decimals || 2
   });
       }
+// تبدیل قیمت دلار به نمایش مناسب
+function formatDollar(value) {
+  if (value === null || value === undefined || isNaN(value)) {
+    return '—';
+  }
+
+  if (value >= 1000) {
+    return '$' + formatNumber(value, 0);
+  }
+
+  if (value >= 1) {
+    return '$' + formatNumber(value, 2);
+  }
+
+  if (value >= 0.01) {
+    return '$' + formatNumber(value, 4);
+  }
+
+  return '$' + formatNumber(value, 8);
+}
+
+// وضعیت تغییر قیمت
+function getChangeInfo(change) {
+
+  if (change === null || change === undefined || isNaN(change)) {
+    return {
+      text: '—',
+      cls: 'flat',
+      arrow: '—'
+    };
+  }
+
+  var value = Number(change);
+
+  if (value > 0) {
+    return {
+      text: '+' + value.toFixed(2) + '%',
+      cls: 'up',
+      arrow: '▲'
+    };
+  }
+
+  if (value < 0) {
+    return {
+      text: value.toFixed(2) + '%',
+      cls: 'down',
+      arrow: '▼'
+    };
+  }
+
+  return {
+    text: '۰.۰۰%',
+    cls: 'flat',
+    arrow: '—'
+  };
+}
