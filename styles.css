@@ -135,3 +135,468 @@ button {
   border-color: var(--accent);
   color: #ffffff;
   }
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px 50px;
+}
+
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 22px;
+}
+
+.section-header h2 {
+  font-size: 24px;
+  color: #ffffff;
+}
+
+.update-info {
+  color: var(--text-muted);
+  font-size: 12px;
+  }
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.price-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  transition: transform 0.2s ease,
+              background 0.2s ease,
+              border-color 0.2s ease;
+}
+
+.price-card:hover {
+  transform: translateY(-3px);
+  background: var(--bg-card-hover);
+  border-color: #475569;
+}
+.price-card-name {
+  font-size: 16px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.price-card-symbol {
+  color: var(--text-muted);
+  font-size: 12px;
+  direction: ltr;
+}
+
+.price-value {
+  font-size: 24px;
+  font-weight: 800;
+  color: #ffffff;
+  direction: ltr;
+  text-align: right;
+  margin-bottom: 8px;
+}
+
+.price-unit {
+  color: var(--text-muted);
+  font-size: 12px;
+  margin-right: 5px;
+}
+
+.change {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.change.up {
+  color: var(--green);
+}
+
+.change.down {
+  color: var(--red);
+  }
+.crypto-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.crypto-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.crypto-image {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #ffffff;
+}
+
+.crypto-rank {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.crypto-name {
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.crypto-symbol {
+  color: var(--text-muted);
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.crypto-price {
+  margin-top: 14px;
+  font-size: 22px;
+  font-weight: 800;
+  direction: ltr;
+  text-align: right;
+}
+
+.price-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 15px;
+    }
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.news-card {
+  display: block;
+  text-decoration: none;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  color: var(--text);
+  transition: 0.2s ease;
+}
+
+.news-card:hover {
+  background: var(--bg-card-hover);
+  transform: translateY(-3px);
+}
+
+.news-title {
+  font-size: 16px;
+  line-height: 1.8;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.news-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--text-muted);
+  font-size: 11px;
+  }
+.data-note {
+  margin-top: 22px;
+  padding: 14px 16px;
+  border-right: 3px solid var(--accent);
+  background: #111c31;
+  border-radius: 10px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  background: #0b1120;
+  padding: 28px 20px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.footer-disclaimer {
+  margin-top: 6px;
+  font-size: 11px;
+  }
+.loading {
+  min-height: 120px;
+  border-radius: var(--radius);
+  background: linear-gradient(
+    90deg,
+    #1e293b 25%,
+    #27364c 50%,
+    #1e293b 75%
+  );
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.error-message {
+  width: 100%;
+  padding: 20px;
+  border: 1px solid #7f1d1d;
+  background: #2a1115;
+  border-radius: var(--radius);
+  color: #fca5a5;
+  text-align: center;
+}
+.empty-message {
+  width: 100%;
+  padding: 25px;
+  background: var(--bg-card);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.price-card img {
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0b1120;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+  }
+@media (max-width: 900px) {
+
+  .cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .header-inner {
+    padding: 16px;
+  }
+
+  .container {
+    padding: 25px 16px 40px;
+  }
+
+  .section-header h2 {
+    font-size: 21px;
+  }
+
+}
+@media (max-width: 700px) {
+
+  .header-inner {
+    align-items: flex-start;
+  }
+
+  .logo h1 {
+    font-size: 18px;
+  }
+
+  .header-subtitle {
+    font-size: 11px;
+  }
+
+  .logo-icon {
+    width: 45px;
+    height: 45px;
+    font-size: 23px;
+  }
+
+  .header-clock {
+    display: none;
+  }
+
+  .tabs-nav {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .tab-btn {
+    padding: 9px 13px;
+    font-size: 12px;
+  }
+
+}
+@media (max-width: 600px) {
+
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .news-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .section-header h2 {
+    font-size: 20px;
+  }
+
+  .update-info {
+    font-size: 11px;
+  }
+
+}
+@media (max-width: 480px) {
+
+  .container {
+    padding: 20px 12px 35px;
+  }
+
+  .header-inner {
+    padding: 13px 12px;
+  }
+
+  .logo {
+    gap: 10px;
+  }
+
+  .logo-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+    font-size: 20px;
+  }
+
+  .logo h1 {
+    font-size: 16px;
+  }
+
+  .header-subtitle {
+    font-size: 10px;
+  }
+
+}
+@media (max-width: 480px) {
+
+  .price-card {
+    padding: 17px;
+  }
+
+  .price-card-name {
+    font-size: 15px;
+  }
+
+  .price-value {
+    font-size: 21px;
+  }
+
+  .crypto-price {
+    font-size: 20px;
+  }
+
+  .news-card {
+    padding: 17px;
+  }
+
+  .news-title {
+    font-size: 14px;
+  }
+
+  }
+@media (max-width: 360px) {
+
+  .tab-btn {
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+
+  .price-card {
+    padding: 15px;
+  }
+
+  .price-value {
+    font-size: 19px;
+  }
+
+  .crypto-price {
+    font-size: 18px;
+  }
+
+  .site-footer {
+    padding: 22px 12px;
+  }
+
+}
+.text-green {
+  color: var(--green);
+}
+
+.text-red {
+  color: var(--red);
+}
+
+.text-gold {
+  color: var(--gold);
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.ltr {
+  direction: ltr;
+}
+
+.rtl {
+  direction: rtl;
+}
