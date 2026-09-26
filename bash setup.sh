@@ -1,0 +1,1 @@
+git clone https://x:art_v2_x_e3c160e4b317f6807a6a3ba7a85078d3f5d2f13e@31b91e7f9954ad8aa334d46f012bd8ed.artifacts.cloudflare.net/git/lee-production/lee-dehdehban-setup-script-7a405c62.git dehdehban-setup-script
