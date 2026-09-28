@@ -1,9 +1,8 @@
 {
   "$schema": "https://developers.cloudflare.com/workers/wrangler/config-schema.json",
-  "name": "dehdehban-worker",
+  "name": "pages5657",
   "main": "worker.js",
   "compatibility_date": "2026-09-28",
-
   "assets": {
     "directory": ".",
     "binding": "ASSETS",
