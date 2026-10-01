@@ -111,3 +111,120 @@ function getNavasanPrice(data, keys) {
 
   return null;
         }
+async function loadNavasan() {
+  try {
+    const response = await fetch('/api/navasan', {
+      cache: 'no-store'
+    });
+
+    if (!response.ok) {
+      throw new Error('Navasan API error');
+    }
+
+    return await response.json();
+
+  } catch (error) {
+    console.error('Navasan:', error);
+    return null;
+  }
+}
+
+async function loadCrypto() {
+  try {
+    const url =
+      'https://api.coingecko.com/api/v3/coins/markets' +
+      '?vs_currency=usd' +
+      '&ids=bitcoin,ethereum,tether' +
+      '&order=market_cap_desc' +
+      '&per_page=10' +
+      '&page=1' +
+      '&sparkline=false';
+
+    const response = await fetch(proxyUrl(url), {
+      cache: 'no-store'
+    });
+
+    if (!response.ok) {
+      throw new Error('CoinGecko API error');
+    }
+
+    return await response.json();
+
+  } catch (error) {
+    console.error('CoinGecko:', error);
+    return [];
+  }
+}
+
+function setText(id, value) {
+  const element = document.getElementById(id);
+  if (element) {
+    element.textContent = value;
+  }
+}
+
+async function updatePrices() {
+  const data = await loadNavasan();
+
+  if (data) {
+    const dollar = getNavasanPrice(data, [
+      'usd_sell',
+      'usd',
+      'dollar',
+      'usd_buy'
+    ]);
+
+    const euro = getNavasanPrice(data, [
+      'eur_sell',
+      'eur',
+      'euro',
+      'eur_buy'
+    ]);
+
+    const gold = getNavasanPrice(data, [
+      'gold_18',
+      'gold18',
+      'geram18',
+      'gold'
+    ]);
+
+    const coin = getNavasanPrice(data, [
+      'coin',
+      'sekkeh',
+      'coin_emami'
+    ]);
+
+    setText('dollarPrice', formatNumber(dollar));
+    setText('euroPrice', formatNumber(euro));
+    setText('gold18Price', formatNumber(gold));
+    setText('coinPrice', formatNumber(coin));
+  }
+
+  const crypto = await loadCrypto();
+
+  crypto.forEach(item => {
+    setText(
+      item.id + 'Price',
+      formatUSD(item.current_price)
+    );
+
+    const change = document.getElementById(
+      item.id + 'Change'
+    );
+
+    if (change) {
+      const result = formatChange(
+        item.price_change_percentage_24h
+      );
+
+      change.textContent =
+        result.arrow + ' ' + result.text;
+
+      change.className = result.cls;
+    }
+  });
+}
+
+updatePrices();
+
+setInterval(updatePrices, 60000);
