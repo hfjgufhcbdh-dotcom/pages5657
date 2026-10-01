@@ -1,79 +1,81 @@
+const CORS = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET,HEAD,OPTIONS',
+  'Access-Control-Max-Age': '86400'
+};
+
+const ALLOWED = [
+  'api.coingecko.com',
+  'hacker-news.firebaseio.com',
+  'api.coinbase.com',
+  'min-api.cryptocompare.com'
+];
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    // CORS
-    const cors = {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type, Authorization",
-      "Cache-Control": "public, max-age=60"
-    };
-
-    if (request.method === "OPTIONS") {
-      return new Response(null, {
-        status: 204,
-        headers: cors
-      });
+    if (request.method === 'OPTIONS') {
+      return new Response(null, { status: 204, headers: CORS });
     }
 
-    // API requests
-    if (url.pathname.startsWith("/api/")) {
-      return handleAPI(request, env, cors);
-    }
-
-    // Static files
-    if (env.ASSETS) {
-      return env.ASSETS.fetch(request);
-    }
-
-    return new Response(
-      "فایل‌های سایت به Worker متصل نشده‌اند. بخش Assets را تنظیم کنید.",
-      {
-        status: 500,
-        headers: {
-          "Content-Type": "text/plain; charset=utf-8"
-        }
+    if (url.pathname === '/api/navasan') {
+      try {
+        const r = await fetch('https://navasan.net/api/free-api/');
+        return new Response(await r.text(), {
+          status: r.status,
+          headers: {
+            'Content-Type': 'application/json',
+            'Cache-Control': 'public,max-age=60',
+            ...CORS
+          }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), {
+          status: 502,
+          headers: { 'Content-Type': 'application/json', ...CORS }
+        });
       }
-    );
+    }
+
+    if (url.pathname === '/api/proxy') {
+      const target = url.searchParams.get('url');
+
+      if (!target) {
+        return new Response(JSON.stringify({ error: 'Missing url' }), {
+          status: 400,
+          headers: { 'Content-Type': 'application/json', ...CORS }
+        });
+      }
+
+      try {
+        const targetUrl = new URL(target);
+
+        if (!ALLOWED.includes(targetUrl.hostname)) {
+          return new Response(JSON.stringify({ error: 'Domain not allowed' }), {
+            status: 403,
+            headers: { 'Content-Type': 'application/json', ...CORS }
+          });
+        }
+
+        const r = await fetch(targetUrl);
+        return new Response(await r.text(), {
+          status: r.status,
+          headers: {
+            'Content-Type': r.headers.get('Content-Type') || 'application/json',
+            'Cache-Control': 'public,max-age=30',
+            ...CORS
+          }
+        });
+
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), {
+          status: 502,
+          headers: { 'Content-Type': 'application/json', ...CORS }
+        });
+      }
+    }
+
+    return env.ASSETS.fetch(request);
   }
 };
-
-async function handleAPI(request, env, cors) {
-  const url = new URL(request.url);
-
-  /*
-   * API فعلاً عمداً از منبع قیمت حدسی استفاده نمی‌کند.
-   * وقتی منبع واقعی پروژه مشخص شود، این قسمت را وصل می‌کنیم.
-   */
-
-  if (url.pathname === "/api/health") {
-    return new Response(
-      JSON.stringify({
-        ok: true,
-        service: "Didaban Worker",
-        time: new Date().toISOString()
-      }),
-      {
-        status: 200,
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          ...cors
-        }
-      }
-    );
-  }
-
-  return new Response(
-    JSON.stringify({
-      error: "API endpoint not configured yet"
-    }),
-    {
-      status: 404,
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        ...cors
-      }
-    }
-  );
-        }
