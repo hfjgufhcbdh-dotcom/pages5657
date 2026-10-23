@@ -58,24 +58,47 @@ export default {
           });
         }
 
-        const r = await fetch(targetUrl);
-        return new Response(await r.text(), {
-          status: r.status,
-          headers: {
-            'Content-Type': r.headers.get('Content-Type') || 'application/json',
-            'Cache-Control': 'public,max-age=30',
-            ...CORS
-          }
-        });
+        const r = await fetch('https://navasan.net/api/free-api/', {
+  headers: { 'Accept': 'application/json' },
+  cache: 'no-store'
+});
 
-      } catch (e) {
-        return new Response(JSON.stringify({ error: e.message }), {
-          status: 502,
-          headers: { 'Content-Type': 'application/json', ...CORS }
-        });
-      }
+const body = await r.text();
+
+if (!r.ok) {
+  return new Response(JSON.stringify({
+    error: 'Price API unavailable',
+    upstreamStatus: r.status
+  }), {
+    status: 502,
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+      'Cache-Control': 'no-store',
+      ...CORS
     }
+  });
+}
 
-    return env.ASSETS.fetch(request);
+try {
+  JSON.parse(body);
+} catch {
+  return new Response(JSON.stringify({
+    error: 'Invalid JSON from price API'
+  }), {
+    status: 502,
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+      'Cache-Control': 'no-store',
+      ...CORS
+    }
+  });
+}
+
+return new Response(body, {
+  status: 200,
+  headers: {
+    'Content-Type': 'application/json; charset=utf-8',
+    'Cache-Control': 'no-store',
+    ...CORS
   }
-};
+});
